@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net" modified="2026-04-14T00:00:00.000Z" agent="draw.io" version="21.0.0" type="device">
+  <diagram id="strategy-pattern" name="Strategy Pattern">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Strategy Pattern - Proveedores LLM&lt;/b&gt;&lt;br&gt;&lt;i&gt;Permite intercambiar el proveedor de LLM sin modificar la lógica de negocio&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="284" y="20" width="600" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Interface LLMPort -->
+        <mxCell id="llmport" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;LLMPort&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ generate(prompt: str): str&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="110" width="270" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- OllamaLLMAdapter -->
+        <mxCell id="ollama" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;OllamaLLMAdapter&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _client: OpenAI&lt;br&gt;- _model: str&lt;br&gt;- _temperature: float&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ generate(prompt: str): str&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="100" y="310" width="250" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- OpenAILLMAdapter -->
+        <mxCell id="openai" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;OpenAILLMAdapter&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _client: OpenAI&lt;br&gt;- _model: str&lt;br&gt;- _temperature: float&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ generate(prompt: str): str&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="430" y="310" width="250" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Future GroqLLMAdapter -->
+        <mxCell id="groq" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;(OpenAI-compatible)&lt;/i&gt;&lt;br&gt;&lt;b&gt;Groq / Otros&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;Mismo OpenAILLMAdapter&lt;br&gt;con diferente base_url&lt;br&gt;y api_key&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;arcSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="310" width="250" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- RAGService (Context) -->
+        <mxCell id="ragservice" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RAGService&lt;/b&gt;&lt;br&gt;&lt;i&gt;(Context)&lt;/i&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _llm: LLMPort&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ ask(conv_id, question): Dict&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="415" y="530" width="240" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows: implements -->
+        <mxCell id="arrow1" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ollama" target="llmport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1_label" value="&lt;i&gt;implements&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow1">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="arrow2" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="openai" target="llmport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2_label" value="&lt;i&gt;implements&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow2">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="arrow3" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="groq" target="llmport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: RAGService uses LLMPort -->
+        <mxCell id="arrow4" style="endArrow=open;endSize=12;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="ragservice" target="llmport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4_label" value="&lt;b&gt;usa&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="arrow4">
+          <mxGeometry x="-0.3" relative="1" as="geometry">
+            <mxPoint x="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- EmbeddingPort Interface -->
+        <mxCell id="embport" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;EmbeddingPort&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ embed(texts: List[str]): List[List[float]]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="760" y="530" width="300" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- SentenceTransformerEmbedding -->
+        <mxCell id="stemb" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SentenceTransformerEmbedding&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _model: SentenceTransformer&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ embed(texts): List[List[float]]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="680" width="260" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arrow5" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="stemb" target="embport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5_label" value="&lt;i&gt;implements&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow5">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Note -->
+        <mxCell id="note1" value="&lt;b&gt;Strategy Pattern:&lt;/b&gt;&lt;br&gt;Las implementaciones concretas son&lt;br&gt;intercambiables en runtime.&lt;br&gt;Se selecciona vía LLM_PROVIDER&lt;br&gt;en el archivo .env" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="30" y="120" width="230" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- File references -->
+        <mxCell id="file1" value="📁 src/domain/ports.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="400" y="90" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="file2" value="📁 src/infrastructure/llm_adapter.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="100" y="445" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="file3" value="📁 src/infrastructure/llm_adapter.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="430" y="445" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="file4" value="📁 src/infrastructure/embedding_adapter.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="780" y="795" width="260" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

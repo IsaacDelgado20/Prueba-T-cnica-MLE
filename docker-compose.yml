@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # ===== API Backend (FastAPI) =====
+  api:
+    build: .
+    container_name: bbva-rag-api
+    command: uvicorn src.interfaces.api:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - model_cache:/home/appuser/.cache
+    env_file:
+      - .env
+    depends_on:
+      chrome:
+        condition: service_started
+      chroma:
+        condition: service_started
+      ollama:
+        condition: service_started
+    networks:
+      - bbva-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health', timeout=5).raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ===== UI Frontend (Streamlit) =====
+  ui:
+    build: .
+    container_name: bbva-rag-ui
+    command: streamlit run src/interfaces/web_ui.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - bbva-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8501/_stcore/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ===== Selenium Chrome (Web Scraping) =====
+  chrome:
+    image: selenium/standalone-chrome:latest
+    container_name: bbva-rag-chrome
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: '2gb'
+    environment:
+      - SE_NODE_MAX_SESSIONS=3
+    networks:
+      - bbva-network
+    restart: unless-stopped
+
+  # ===== ChromaDB (Vector Store) =====
+  chroma:
+    image: chromadb/chroma:0.5.5
+    container_name: bbva-rag-chroma
+    ports:
+      - "8100:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=false
+    networks:
+      - bbva-network
+    restart: unless-stopped
+  # ===== Ollama (LLM) =====
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bbva-rag-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - bbva-network
+    restart: unless-stopped
+
+volumes:
+  chroma_data:
+    driver: local
+  ollama_data:
+    driver: local
+  model_cache:
+    driver: local
+
+networks:
+  bbva-network:
+    driver: bridge

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>14 — Conclusiones</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @keyframes statCount { from { opacity:0; transform: scale(0.5) translateY(10px); } to { opacity:1; transform: scale(1) translateY(0); } }
+    @keyframes cardReveal { from { opacity:0; transform: translateY(20px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
+    @keyframes borderGlow {
+      0%,100% { box-shadow: 0 0 0 transparent; }
+      50% { box-shadow: 0 -4px 15px rgba(var(--glow-r,73), var(--glow-g,165), var(--glow-b,230), 0.15); }
+    }
+    @keyframes ctaPulse {
+      0%,100% { box-shadow: 0 0 30px rgba(73,165,230,0.05); }
+      50% { box-shadow: 0 0 50px rgba(73,165,230,0.12), 0 0 100px rgba(73,165,230,0.05); }
+    }
+    .conclusion-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .conclusion-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      animation: cardReveal 0.6s ease forwards;
+    }
+    .conclusion-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      transition: left 0.5s ease;
+    }
+    .conclusion-card:hover::before { left: 100%; }
+    .conclusion-card:hover {
+      border-color: rgba(73,165,230,0.25);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.35), 0 0 25px rgba(73,165,230,0.08);
+    }
+    .cc-icon {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 8px rgba(73,165,230,0.2));
+    }
+    .cc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e0e8f0;
+      margin-bottom: 8px;
+    }
+    .cc-desc {
+      font-size: 11px;
+      color: #8899aa;
+      line-height: 1.6;
+    }
+    .highlight-stats {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      margin: 16px 0;
+    }
+    .stat-item {
+      text-align: center;
+      animation: statCount 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+      opacity: 0;
+    }
+    .stat-item:nth-child(1) { animation-delay: 0.3s; }
+    .stat-item:nth-child(2) { animation-delay: 0.45s; }
+    .stat-item:nth-child(3) { animation-delay: 0.6s; }
+    .stat-item:nth-child(4) { animation-delay: 0.75s; }
+    .stat-item:nth-child(5) { animation-delay: 0.9s; }
+    .stat-number {
+      font-size: 40px;
+      font-weight: 900;
+      display: block;
+      filter: drop-shadow(0 0 15px currentColor);
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #8899aa;
+      margin-top: 4px;
+    }
+    .final-cta {
+      text-align: center;
+      margin-top: 16px;
+      padding: 20px 30px;
+      background: linear-gradient(135deg, rgba(73,165,230,0.06), rgba(72,174,100,0.04), rgba(155,89,182,0.04));
+      border: 1px solid rgba(73,165,230,0.12);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      animation: ctaPulse 4s ease-in-out infinite;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(73,165,230,0.4), rgba(45,204,205,0.3), transparent);
+    }
+    .final-cta h2 {
+      color: #49A5E6;
+      font-size: 20px;
+      margin: 0 0 8px 0;
+    }
+    .final-cta p {
+      color: #8899aa;
+      font-size: 13px;
+      margin: 0;
+    }
+    .tech-tags-final {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">14 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1"><span class="highlight">Conclusiones</span> & Logros</h1>
+    <p class="slide-subtitle animate delay-2">Resumen de lo construido — Asistente RAG BBVA Colombia</p>
+
+    <div class="slide-content">
+      <!-- Stats Row -->
+      <div class="highlight-stats animate delay-3">
+        <div class="stat-item">
+          <span class="stat-number" style="color:#49A5E6">6</span>
+          <span class="stat-label">Patrones de diseño</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" style="color:#48AE64">4</span>
+          <span class="stat-label">Capas hexagonales</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" style="color:#F8CD51">5</span>
+          <span class="stat-label">Servicios Docker</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" style="color:#9B59B6">3</span>
+          <span class="stat-label">Proveedores LLM</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" style="color:#F35E61">10+</span>
+          <span class="stat-label">Buenas prácticas</span>
+        </div>
+      </div>
+
+      <!-- Achievements Grid -->
+      <div class="conclusion-grid animate delay-4">
+        <div class="conclusion-card" style="border-top:3px solid #49A5E6">
+          <span class="cc-icon">🏛️</span>
+          <div class="cc-title">Arquitectura Sólida</div>
+          <div class="cc-desc">Hexagonal Architecture con SOLID principles. Código desacoplado, testable y extensible.</div>
+        </div>
+        <div class="conclusion-card" style="border-top:3px solid #48AE64">
+          <span class="cc-icon">🧠</span>
+          <div class="cc-title">IA Avanzada</div>
+          <div class="cc-desc">RAG con embeddings, reranking Cross-Encoder y generación con historial contextual.</div>
+        </div>
+        <div class="conclusion-card" style="border-top:3px solid #F8CD51">
+          <span class="cc-icon">🔄</span>
+          <div class="cc-title">Flexibilidad Total</div>
+          <div class="cc-desc">Strategy Pattern permite cambiar LLM con una variable. Factory crea servicios según config.</div>
+        </div>
+        <div class="conclusion-card" style="border-top:3px solid #9B59B6">
+          <span class="cc-icon">🔒</span>
+          <div class="cc-title">Seguridad First</div>
+          <div class="cc-desc">SecretStr, parameterized queries, no-root Docker, sanitización de inputs.</div>
+        </div>
+        <div class="conclusion-card" style="border-top:3px solid #F35E61">
+          <span class="cc-icon">🐳</span>
+          <div class="cc-title">DevOps Ready</div>
+          <div class="cc-desc">Docker Compose, multi-stage builds, healthchecks, un solo <code>docker compose up</code>.</div>
+        </div>
+        <div class="conclusion-card" style="border-top:3px solid #2DCCCD">
+          <span class="cc-icon">📊</span>
+          <div class="cc-title">Experiencia de Usuario</div>
+          <div class="cc-desc">Chat interactivo con fuentes, métricas en vivo y API REST documentada.</div>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="final-cta animate delay-5">
+        <h2>🚀 Asistente RAG BBVA Colombia</h2>
+        <p>Prueba técnica — Arquitectura Hexagonal · Python 3.11 · FastAPI · Ollama · ChromaDB · Docker</p>
+        <div class="tech-tags-final" style="margin-top:12px">
+          <span class="tag tag-blue">Hexagonal</span>
+          <span class="tag tag-green">SOLID</span>
+          <span class="tag tag-orange">Strategy</span>
+          <span class="tag tag-purple">Factory</span>
+          <span class="tag tag-red">Singleton</span>
+          <span class="tag tag-cyan">Repository</span>
+          <span class="tag tag-blue">Template Method</span>
+          <span class="tag tag-green">Clean Code</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide13.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+      </div>
+      <a href="slide01.html">🏠 Inicio</a>
+    </nav>
+  </div>
+</body>
+</html>

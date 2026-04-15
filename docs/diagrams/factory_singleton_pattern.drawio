@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net" modified="2026-04-14T00:00:00.000Z" agent="draw.io" version="21.0.0" type="device">
+  <diagram id="factory-singleton-pattern" name="Factory + Singleton Pattern">
+    <mxGraphModel dx="1422" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Factory Pattern + Singleton Pattern - ServiceContainer&lt;/b&gt;&lt;br&gt;&lt;i&gt;Centraliza la creación de objetos y garantiza una instancia única del contenedor&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="250" y="10" width="700" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========= ServiceContainer (center) ========= -->
+        <mxCell id="container" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ServiceContainer&lt;/b&gt;&lt;br&gt;&lt;i&gt;Factory + Singleton&lt;/i&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _instance: ServiceContainer = None (class var)&lt;br&gt;- _settings: Settings&lt;br&gt;- _embedding: EmbeddingPort&lt;br&gt;- _vector_store: VectorStorePort&lt;br&gt;- _llm: LLMPort&lt;br&gt;- _reranker: RerankerPort&lt;br&gt;- _conversation_repo: ConversationRepository&lt;br&gt;- _document_repo: DocumentRepository&lt;br&gt;- _scraper: ScraperPort&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;b&gt;instance&lt;/b&gt;(settings): ServiceContainer  ← &lt;i&gt;Singleton&lt;/i&gt;&lt;br&gt;+ &lt;b&gt;get_llm&lt;/b&gt;(): LLMPort  ← &lt;i&gt;Factory Method&lt;/i&gt;&lt;br&gt;+ get_embedding(): EmbeddingPort&lt;br&gt;+ get_vector_store(): VectorStorePort&lt;br&gt;+ get_reranker(): RerankerPort&lt;br&gt;+ get_conversation_repo(): ConversationRepository&lt;br&gt;+ get_document_repo(): DocumentRepository&lt;br&gt;+ get_scraper(): ScraperPort&lt;br&gt;+ get_scraping_service(): ScrapingService&lt;br&gt;+ get_rag_service(): RAGService&lt;br&gt;+ get_analytics_service(): AnalyticsService&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=1;arcSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="80" width="430" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="container_file" value="📁 src/infrastructure/container.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="60" width="250" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Settings -->
+        <mxCell id="settings" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Settings&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;LLM_PROVIDER&lt;br&gt;LLM_MODEL&lt;br&gt;CHROMA_HOST&lt;br&gt;EMBEDDING_MODEL&lt;br&gt;...&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="settings_file" value="📁 src/infrastructure/config.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="env_file" value="📄 .env" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=0.27;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="100" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow settings → env -->
+        <mxCell id="arr_env" style="endArrow=open;endSize=8;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="settings" target="env_file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_env_label" value="lee de" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arr_env">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Arrow settings → container -->
+        <mxCell id="arr_set" style="endArrow=open;endSize=12;html=1;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.1;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="settings" target="container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_set_label" value="&lt;b&gt;configura&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;" vertex="1" connectable="0" parent="arr_set">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ========= Created Products (bottom) ========= -->
+
+        <!-- Ollama -->
+        <mxCell id="prod_ollama" value="&lt;b&gt;OllamaLLM&lt;br&gt;Adapter&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="50" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- OpenAI -->
+        <mxCell id="prod_openai" value="&lt;b&gt;OpenAILLM&lt;br&gt;Adapter&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="180" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- Embedding -->
+        <mxCell id="prod_emb" value="&lt;b&gt;Sentence&lt;br&gt;Transformer&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="310" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- Chroma -->
+        <mxCell id="prod_chroma" value="&lt;b&gt;Chroma&lt;br&gt;VectorStore&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="440" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- Reranker -->
+        <mxCell id="prod_reranker" value="&lt;b&gt;CrossEncoder&lt;br&gt;Reranker&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="570" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- SQLite -->
+        <mxCell id="prod_sqlite" value="&lt;b&gt;SQLite&lt;br&gt;ConvRepo&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="700" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- FileRepo -->
+        <mxCell id="prod_file" value="&lt;b&gt;File&lt;br&gt;DocRepo&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="830" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+        <!-- Selenium -->
+        <mxCell id="prod_selenium" value="&lt;b&gt;Selenium&lt;br&gt;Scraper&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="960" y="510" width="110" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Factory Arrows -->
+        <mxCell id="fa1" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.1;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_ollama">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa2" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.15;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_openai">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa3" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_emb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa4" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.4;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_chroma">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa5" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.55;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_reranker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa6" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.7;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_sqlite">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa7" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=0.85;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fa8" style="endArrow=block;endSize=10;endFill=1;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="container" target="prod_selenium">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Factory label -->
+        <mxCell id="factory_label" value="&lt;b&gt;«creates»&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="470" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ========= Consumers (top right) ========= -->
+        <mxCell id="api" value="&lt;b&gt;FastAPI&lt;br&gt;(api.py)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="870" y="130" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arr_api" style="endArrow=open;endSize=12;html=1;entryX=1;entryY=0.15;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="api" target="container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr_api_label" value="ServiceContainer.instance()" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arr_api">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ========= Singleton Note ========= -->
+        <mxCell id="singleton_note" value="&lt;b&gt;🔒 Singleton Pattern:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;code&gt;_instance = None  # class var&lt;br&gt;&lt;br&gt;@classmethod&lt;br&gt;def instance(cls, settings):&lt;br&gt;    if cls._instance is None:&lt;br&gt;        cls._instance = cls(settings)&lt;br&gt;    return cls._instance&lt;/code&gt;&lt;br&gt;&lt;br&gt;Garantiza una sola instancia,&lt;br&gt;evitando duplicar modelos ML&lt;br&gt;y conexiones costosas." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="850" y="230" width="260" height="220" as="geometry" />
+        </mxCell>
+
+        <!-- Factory Decision Note -->
+        <mxCell id="factory_note" value="&lt;b&gt;🏭 Factory Method (get_llm):&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;code&gt;if provider == &quot;ollama&quot;:&lt;br&gt;    return OllamaLLMAdapter(...)&lt;br&gt;elif provider in (&quot;openai&quot;, &quot;groq&quot;):&lt;br&gt;    return OpenAILLMAdapter(...)&lt;/code&gt;&lt;br&gt;&lt;br&gt;Selección de implementación&lt;br&gt;en runtime basada en config." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="50" y="380" width="250" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Application Services -->
+        <mxCell id="svc_header" value="&lt;b&gt;Servicios de Aplicación (compuestos por Factory)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="300" y="600" width="400" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="svc_scraping" value="&lt;b&gt;ScrapingService&lt;/b&gt;&lt;br&gt;&lt;i&gt;scraper + embedding&lt;br&gt;+ vector_store + doc_repo&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="170" y="640" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_rag" value="&lt;b&gt;RAGService&lt;/b&gt;&lt;br&gt;&lt;i&gt;embedding + vector_store&lt;br&gt;+ llm + reranker + conv_repo&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="410" y="640" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_analytics" value="&lt;b&gt;AnalyticsService&lt;/b&gt;&lt;br&gt;&lt;i&gt;conv_repo&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="680" y="640" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows from products to services -->
+        <mxCell id="compose_label" value="&lt;i&gt;El Factory compone los servicios inyectando las dependencias creadas&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="300" y="575" width="400" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

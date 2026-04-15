@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>05 — Stack Tecnológico</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .tech-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 20px 14px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .tech-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(73,165,230,0.4);
+      background: rgba(73,165,230,0.06);
+      box-shadow: 0 8px 32px rgba(73,165,230,0.15);
+    }
+    .tech-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .tech-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e0e8f0;
+      margin-bottom: 4px;
+    }
+    .tech-role {
+      font-size: 10px;
+      color: #8899aa;
+      line-height: 1.4;
+    }
+    .tech-card.highlight-blue { border-color: rgba(73,165,230,0.35); background: rgba(73,165,230,0.05); }
+    .tech-card.highlight-green { border-color: rgba(72,174,100,0.35); background: rgba(72,174,100,0.05); }
+    .tech-card.highlight-orange { border-color: rgba(248,205,81,0.35); background: rgba(248,205,81,0.05); }
+    .tech-card.highlight-red { border-color: rgba(243,94,97,0.35); background: rgba(243,94,97,0.05); }
+    .tech-card.highlight-purple { border-color: rgba(155,89,182,0.35); background: rgba(155,89,182,0.05); }
+    .tech-card.highlight-cyan { border-color: rgba(45,204,205,0.35); background: rgba(45,204,205,0.05); }
+    .layer-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+    .layer-section { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">05 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Stack <span class="highlight">Tecnológico</span></h1>
+    <p class="slide-subtitle animate delay-2">Herramientas seleccionadas para cada capa de la arquitectura</p>
+
+    <div class="slide-content animate delay-3">
+      <!-- Core & Framework -->
+      <div class="layer-section">
+        <div class="layer-label" style="color:#49A5E6">🔷 Core & Frameworks</div>
+        <div class="tech-grid" style="grid-template-columns: repeat(5,1fr)">
+          <div class="tech-card highlight-blue">
+            <span class="tech-icon">🐍</span>
+            <div class="tech-name">Python 3.11</div>
+            <div class="tech-role">Lenguaje principal. Tipado estricto, dataclasses frozen.</div>
+          </div>
+          <div class="tech-card highlight-blue">
+            <span class="tech-icon">⚡</span>
+            <div class="tech-name">FastAPI</div>
+            <div class="tech-role">API REST async. Docs automáticos, Pydantic validation.</div>
+          </div>
+          <div class="tech-card highlight-blue">
+            <span class="tech-icon">🖥️</span>
+            <div class="tech-name">Streamlit</div>
+            <div class="tech-role">Dashboard interactivo. Chat UI + métricas en tiempo real.</div>
+          </div>
+          <div class="tech-card highlight-blue">
+            <span class="tech-icon">🛡️</span>
+            <div class="tech-name">Pydantic v2</div>
+            <div class="tech-role">Validación de datos con SecretStr, Settings seguras.</div>
+          </div>
+          <div class="tech-card highlight-blue">
+            <span class="tech-icon">📝</span>
+            <div class="tech-name">Logging stdlib</div>
+            <div class="tech-role">Trazabilidad con niveles, rotación y formato estándar.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI & Embeddings -->
+      <div class="layer-section">
+        <div class="layer-label" style="color:#9B59B6">🟣 IA & Embeddings</div>
+        <div class="tech-grid" style="grid-template-columns: repeat(5,1fr)">
+          <div class="tech-card highlight-purple">
+            <span class="tech-icon">🧠</span>
+            <div class="tech-name">Ollama</div>
+            <div class="tech-role">LLM local (Llama 3). Sin costos, privacidad total.</div>
+          </div>
+          <div class="tech-card highlight-purple">
+            <span class="tech-icon">☁️</span>
+            <div class="tech-name">OpenAI / Groq</div>
+            <div class="tech-role">LLM cloud. Intercambiable vía Strategy Pattern.</div>
+          </div>
+          <div class="tech-card highlight-purple">
+            <span class="tech-icon">📐</span>
+            <div class="tech-name">Sentence-Transformers</div>
+            <div class="tech-role">Embeddings de alta calidad para español.</div>
+          </div>
+          <div class="tech-card highlight-purple">
+            <span class="tech-icon">🔀</span>
+            <div class="tech-name">Cross-Encoder</div>
+            <div class="tech-role">Reranking fino: Top 10 → Top 3 relevantes.</div>
+          </div>
+          <div class="tech-card highlight-purple">
+            <span class="tech-icon">📦</span>
+            <div class="tech-name">ChromaDB</div>
+            <div class="tech-role">Vector store local. Top-K similarity search.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data & Scraping -->
+      <div class="layer-section">
+        <div class="layer-label" style="color:#2DCCCD">🔹 Data & Scraping</div>
+        <div class="tech-grid" style="grid-template-columns: repeat(5,1fr)">
+          <div class="tech-card highlight-cyan">
+            <span class="tech-icon">🕷️</span>
+            <div class="tech-name">Selenium</div>
+            <div class="tech-role">Web scraping dinámico con headless Chrome.</div>
+          </div>
+          <div class="tech-card highlight-cyan">
+            <span class="tech-icon">🍲</span>
+            <div class="tech-name">BeautifulSoup4</div>
+            <div class="tech-role">Parsing HTML. Limpieza de contenido BBVA.</div>
+          </div>
+          <div class="tech-card highlight-cyan">
+            <span class="tech-icon">🗄️</span>
+            <div class="tech-name">SQLite + WAL</div>
+            <div class="tech-role">Historial de conversaciones. Mode WAL, context manager.</div>
+          </div>
+          <div class="tech-card highlight-green">
+            <span class="tech-icon">🐳</span>
+            <div class="tech-name">Docker Compose</div>
+            <div class="tech-role">5 servicios orquestados. Multi-stage builds.</div>
+          </div>
+          <div class="tech-card highlight-green">
+            <span class="tech-icon">🏥</span>
+            <div class="tech-name">Healthchecks</div>
+            <div class="tech-role">Probes liveness/readiness por servicio.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide04.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide06.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

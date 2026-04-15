@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>11 — Buenas Prácticas Aplicadas</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .bp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .bp-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+    .bp-card:hover {
+      border-color: rgba(73,165,230,0.3);
+      background: rgba(73,165,230,0.03);
+    }
+    .bp-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .bp-text h4 {
+      font-size: 12px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+    }
+    .bp-text p {
+      font-size: 10.5px;
+      color: #8899aa;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .bp-text code {
+      font-size: 9.5px;
+      background: rgba(73,165,230,0.1);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #7dc4f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">11 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Buenas <span class="highlight">Prácticas</span> Aplicadas</h1>
+    <p class="slide-subtitle animate delay-2">Conceptos de ingeniería de software implementados en cada capa</p>
+
+    <div class="slide-content animate delay-3">
+      <!-- NEW comprehensive best practices diagram -->
+      <div style="display:grid; grid-template-columns: 380px 1fr; gap:24px;">
+        <!-- Left: Visual Map SVG -->
+        <div class="diagram-card" style="padding:10px">
+          <svg viewBox="0 0 360 460" width="100%" height="100%">
+            <!-- Center: Clean Code -->
+            <circle cx="180" cy="230" r="45" fill="rgba(73,165,230,0.08)" stroke="#49A5E6" stroke-width="2.5"/>
+            <text x="180" y="225" text-anchor="middle" fill="#49A5E6" font-size="11" font-weight="700" font-family="Inter">Clean</text>
+            <text x="180" y="242" text-anchor="middle" fill="#49A5E6" font-size="11" font-weight="700" font-family="Inter">Code</text>
+
+            <!-- SOLID ring -->
+            <circle cx="180" cy="230" r="95" fill="none" stroke="rgba(72,174,100,0.25)" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <text x="180" y="125" text-anchor="middle" fill="#7dd697" font-size="10" font-weight="700" font-family="Inter">SOLID</text>
+
+            <!-- Nodes around -->
+            <!-- SRP -->
+            <circle cx="80" cy="155" r="28" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="80" y="152" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="700" font-family="Inter">SRP</text>
+            <text x="80" y="164" text-anchor="middle" fill="#8899aa" font-size="7" font-family="Inter">1 clase = 1 rol</text>
+            <line x1="104" y1="168" x2="145" y2="200" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+
+            <!-- OCP -->
+            <circle cx="280" cy="155" r="28" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="280" y="152" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="700" font-family="Inter">OCP</text>
+            <text x="280" y="164" text-anchor="middle" fill="#8899aa" font-size="7" font-family="Inter">Extensible</text>
+            <line x1="256" y1="168" x2="215" y2="200" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+
+            <!-- DIP -->
+            <circle cx="80" cy="305" r="28" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="80" y="302" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="700" font-family="Inter">DIP</text>
+            <text x="80" y="314" text-anchor="middle" fill="#8899aa" font-size="7" font-family="Inter">Abstracciones</text>
+            <line x1="104" y1="292" x2="145" y2="260" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+
+            <!-- LSP -->
+            <circle cx="280" cy="305" r="28" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="280" y="302" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="700" font-family="Inter">LSP</text>
+            <text x="280" y="314" text-anchor="middle" fill="#8899aa" font-size="7" font-family="Inter">Sustituible</text>
+            <line x1="256" y1="292" x2="215" y2="260" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+
+            <!-- Outer ring: Patterns -->
+            <circle cx="180" cy="230" r="155" fill="none" stroke="rgba(248,205,81,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
+            <text x="180" y="66" text-anchor="middle" fill="#f5d97a" font-size="9" font-weight="600" font-family="Inter">PATRONES DE DISEÑO</text>
+
+            <!-- Pattern nodes -->
+            <rect x="8" y="215" width="48" height="30" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="32" y="234" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Strategy</text>
+
+            <rect x="305" y="215" width="48" height="30" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="329" y="234" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Factory</text>
+
+            <rect x="112" y="380" width="55" height="28" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="140" y="398" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Singleton</text>
+
+            <rect x="196" y="380" width="55" height="28" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="224" y="398" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Repository</text>
+
+            <rect x="120" y="48" width="52" height="28" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="146" y="66" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Template</text>
+
+            <rect x="192" y="48" width="55" height="28" rx="6" fill="rgba(248,205,81,0.08)" stroke="rgba(248,205,81,0.3)" stroke-width="1"/>
+            <text x="220" y="66" text-anchor="middle" fill="#f5d97a" font-size="7.5" font-weight="600" font-family="Inter">Hexagonal</text>
+
+            <!-- Outer: Security & Quality -->
+            <rect x="10" y="430" width="340" height="24" rx="6" fill="rgba(243,94,97,0.06)" stroke="rgba(243,94,97,0.2)" stroke-width="1"/>
+            <text x="180" y="446" text-anchor="middle" fill="#f5898b" font-size="9" font-weight="600" font-family="Inter">🔒 Seguridad · 📝 Type Safety · 🧪 Testabilidad · 🐳 DevOps</text>
+          </svg>
+        </div>
+
+        <!-- Right: Best Practices Grid -->
+        <div class="bp-grid">
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(73,165,230,0.1)">🧊</div>
+            <div class="bp-text">
+              <h4 style="color:#49A5E6">Frozen Dataclasses</h4>
+              <p>Entidades inmutables con <code>@dataclass(frozen=True)</code>. Previene mutaciones accidentales. Hashables.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(243,94,97,0.1)">🔒</div>
+            <div class="bp-text">
+              <h4 style="color:#F35E61">SecretStr (Pydantic)</h4>
+              <p>API keys no se imprimen en logs. <code>SecretStr</code> oculta datos sensibles automáticamente.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(72,174,100,0.1)">🕐</div>
+            <div class="bp-text">
+              <h4 style="color:#48AE64">Timezone-Aware</h4>
+              <p>Todos los timestamps usan <code>datetime.now(UTC)</code>. Evita bugs de zona horaria en producción.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(155,89,182,0.1)">🔄</div>
+            <div class="bp-text">
+              <h4 style="color:#9B59B6">Retry + Backoff</h4>
+              <p>Decorador <code>@retry_with_backoff</code> con jitter. Resiliencia ante fallos transitorios de red/LLM.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(248,205,81,0.1)">📋</div>
+            <div class="bp-text">
+              <h4 style="color:#F8CD51">Context Managers</h4>
+              <p>Conexiones DB con <code>with</code>. Garantiza cierre limpio de recursos siempre.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(45,204,205,0.1)">🛡️</div>
+            <div class="bp-text">
+              <h4 style="color:#2DCCCD">Parameterized Queries</h4>
+              <p>Todas las queries usan <code>?</code> placeholders. Cero riesgo de SQL injection.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(73,165,230,0.1)">🧵</div>
+            <div class="bp-text">
+              <h4 style="color:#49A5E6">Thread-Safe Singleton</h4>
+              <p>Double-checked locking con <code>threading.Lock()</code>. Seguro para FastAPI async.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(72,174,100,0.1)">📝</div>
+            <div class="bp-text">
+              <h4 style="color:#48AE64">Type Hints + Enums</h4>
+              <p>Tipado estricto en todo el código. <code>Enum</code> para constantes seguras y autocompletables.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(243,94,97,0.1)">⚡</div>
+            <div class="bp-text">
+              <h4 style="color:#F35E61">WAL Mode SQLite</h4>
+              <p>Write-Ahead Logging para concurrencia. Lecturas no bloquean escrituras.</p>
+            </div>
+          </div>
+          <div class="bp-card">
+            <div class="bp-icon" style="background:rgba(155,89,182,0.1)">🏗️</div>
+            <div class="bp-text">
+              <h4 style="color:#9B59B6">Template Method</h4>
+              <p>Base scraper con <code>_do_scrape()</code> abstracto. Scraping uniforme, adaptable por fuente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide10.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide12.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

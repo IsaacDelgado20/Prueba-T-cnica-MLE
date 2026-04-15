@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>03 — ¿Qué es Arquitectura Hexagonal?</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hex-concept { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .vs-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    .vs-table th { text-align: left; padding: 10px 14px; font-size: 11px; color: #49A5E6; border-bottom: 2px solid rgba(73,165,230,0.2); }
+    .vs-table td { padding: 10px 14px; font-size: 11px; color: #c0ccd8; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .vs-table tr:hover td { background: rgba(73,165,230,0.03); }
+    .vs-bad { color: #F35E61; }
+    .vs-good { color: #48AE64; }
+    .origin-box {
+      background: rgba(73,165,230,0.04);
+      border: 1px solid rgba(73,165,230,0.12);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 12px;
+    }
+    .origin-box p { font-size: 11px; color: #8899aa; line-height: 1.7; margin: 0; }
+    .origin-box strong { color: #e0e8f0; }
+    .origin-box em { color: #f5d97a; font-style: normal; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">03 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">¿Qué es Arquitectura <span class="highlight">Hexagonal</span>?</h1>
+    <p class="slide-subtitle animate delay-2">Ports & Adapters — Alistair Cockburn, 2005</p>
+
+    <div class="slide-content">
+      <div class="hex-concept">
+        <!-- Left: Conceptual Diagram -->
+        <div class="animate delay-3">
+          <div class="diagram-card" style="padding:8px">
+            <svg viewBox="0 0 440 380" width="100%" height="100%">
+              <defs>
+                <filter id="glowC"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+
+              <!-- Traditional (left) -->
+              <text x="110" y="22" text-anchor="middle" fill="#F35E61" font-size="11" font-weight="700" font-family="Inter">❌ Tradicional (Capas)</text>
+              <rect x="30" y="30" width="160" height="36" rx="6" fill="rgba(243,94,97,0.1)" stroke="rgba(243,94,97,0.3)" stroke-width="1.5"/>
+              <text x="110" y="53" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="600" font-family="Inter">UI / Presentación</text>
+              <text x="110" y="75" fill="#8899aa" font-size="10" font-family="Inter" text-anchor="middle">▼</text>
+              <rect x="30" y="82" width="160" height="36" rx="6" fill="rgba(243,94,97,0.1)" stroke="rgba(243,94,97,0.3)" stroke-width="1.5"/>
+              <text x="110" y="105" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="600" font-family="Inter">Lógica de Negocio</text>
+              <text x="110" y="127" fill="#8899aa" font-size="10" font-family="Inter" text-anchor="middle">▼</text>
+              <rect x="30" y="134" width="160" height="36" rx="6" fill="rgba(243,94,97,0.1)" stroke="rgba(243,94,97,0.3)" stroke-width="1.5"/>
+              <text x="110" y="157" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="600" font-family="Inter">Acceso a Datos</text>
+              <text x="110" y="185" text-anchor="middle" fill="#F35E61" font-size="9" font-family="Inter">Acoplamiento alto ↕️</text>
+              <text x="110" y="198" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Cambiar DB rompe todo</text>
+
+              <!-- Hexagonal (right) -->
+              <text x="330" y="22" text-anchor="middle" fill="#48AE64" font-size="11" font-weight="700" font-family="Inter">✅ Hexagonal (Ports &amp; Adapters)</text>
+
+              <!-- Outer hex -->
+              <polygon points="330,40 420,80 420,160 330,200 240,160 240,80"
+                       fill="rgba(248,205,81,0.04)" stroke="rgba(248,205,81,0.25)" stroke-width="1.5" stroke-dasharray="6,3"/>
+              <text x="268" y="58" fill="#f5d97a" font-size="7" font-weight="600" font-family="Inter">Adapters</text>
+
+              <!-- Inner hex -->
+              <polygon points="330,70 388,100 388,150 330,180 272,150 272,100"
+                       fill="rgba(73,165,230,0.06)" stroke="#49A5E6" stroke-width="2" filter="url(#glowC)"/>
+              <text x="330" y="118" text-anchor="middle" fill="#49A5E6" font-size="10" font-weight="700" font-family="Inter">Dominio</text>
+              <text x="330" y="133" text-anchor="middle" fill="#7dc4f5" font-size="8" font-family="Inter">(Puro, aislado)</text>
+
+              <!-- Port labels -->
+              <text x="253" y="124" text-anchor="middle" fill="#c39bd3" font-size="7" font-weight="600" font-family="Inter" transform="rotate(-60,253,124)">Port In</text>
+              <text x="407" y="124" text-anchor="middle" fill="#c39bd3" font-size="7" font-weight="600" font-family="Inter" transform="rotate(60,407,124)">Port Out</text>
+
+              <!-- External adapters -->
+              <rect x="222" y="56" width="36" height="18" rx="4" fill="rgba(243,94,97,0.1)" stroke="rgba(243,94,97,0.2)" stroke-width="1"/>
+              <text x="240" y="68" text-anchor="middle" fill="#f5898b" font-size="6" font-weight="600" font-family="Inter">API</text>
+              <rect x="400" y="56" width="36" height="18" rx="4" fill="rgba(72,174,100,0.1)" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+              <text x="418" y="68" text-anchor="middle" fill="#7dd697" font-size="6" font-weight="600" font-family="Inter">DB</text>
+              <rect x="222" y="168" width="36" height="18" rx="4" fill="rgba(243,94,97,0.1)" stroke="rgba(243,94,97,0.2)" stroke-width="1"/>
+              <text x="240" y="180" text-anchor="middle" fill="#f5898b" font-size="6" font-weight="600" font-family="Inter">UI</text>
+              <rect x="400" y="168" width="36" height="18" rx="4" fill="rgba(72,174,100,0.1)" stroke="rgba(72,174,100,0.2)" stroke-width="1"/>
+              <text x="418" y="180" text-anchor="middle" fill="#7dd697" font-size="6" font-weight="600" font-family="Inter">LLM</text>
+
+              <text x="330" y="215" text-anchor="middle" fill="#48AE64" font-size="9" font-family="Inter">Dependencias → hacia el centro</text>
+
+              <!-- KEY RULES section -->
+              <line x1="20" y1="230" x2="430" y2="230" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <text x="220" y="255" text-anchor="middle" fill="#e0e8f0" font-size="12" font-weight="700" font-family="Inter">📐 Reglas Fundamentales</text>
+
+              <!-- Rule 1 -->
+              <rect x="15" y="268" width="200" height="44" rx="8" fill="rgba(73,165,230,0.05)" stroke="rgba(73,165,230,0.15)" stroke-width="1"/>
+              <text x="115" y="286" text-anchor="middle" fill="#49A5E6" font-size="9" font-weight="700" font-family="Inter">1. Dependency Inversion</text>
+              <text x="115" y="302" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Todo depende del dominio, nunca al revés</text>
+
+              <!-- Rule 2 -->
+              <rect x="225" y="268" width="200" height="44" rx="8" fill="rgba(155,89,182,0.05)" stroke="rgba(155,89,182,0.15)" stroke-width="1"/>
+              <text x="325" y="286" text-anchor="middle" fill="#c39bd3" font-size="9" font-weight="700" font-family="Inter">2. Ports = Contratos</text>
+              <text x="325" y="302" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Interfaces abstractas que define el dominio</text>
+
+              <!-- Rule 3 -->
+              <rect x="15" y="320" width="200" height="44" rx="8" fill="rgba(72,174,100,0.05)" stroke="rgba(72,174,100,0.15)" stroke-width="1"/>
+              <text x="115" y="338" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="700" font-family="Inter">3. Adapters = Implementaciones</text>
+              <text x="115" y="354" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Infra concreta, intercambiable</text>
+
+              <!-- Rule 4 -->
+              <rect x="225" y="320" width="200" height="44" rx="8" fill="rgba(248,205,81,0.05)" stroke="rgba(248,205,81,0.15)" stroke-width="1"/>
+              <text x="325" y="338" text-anchor="middle" fill="#f5d97a" font-size="9" font-weight="700" font-family="Inter">4. Dominio = Puro</text>
+              <text x="325" y="354" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Sin imports de frameworks o DBs</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right: Explanation -->
+        <div class="col animate delay-4">
+          <div class="origin-box">
+            <p>
+              Propuesta por <strong>Alistair Cockburn</strong> en <em>2005</em>, la arquitectura hexagonal
+              (también llamada <strong>Ports & Adapters</strong>) busca que la <em>lógica de negocio sea completamente
+              independiente</em> de la tecnología que la rodea: bases de datos, APIs, frameworks, etc.
+            </p>
+          </div>
+
+          <div class="card" style="border-left:3px solid #49A5E6;margin-top:14px">
+            <h3 style="color:#49A5E6">🔌 Ports (Puertos)</h3>
+            <p>Interfaces abstractas definidas <strong>por el dominio</strong>. Son el contrato que el mundo exterior
+            debe cumplir para comunicarse con la lógica de negocio.</p>
+            <p style="margin-top:6px;font-size:11px;color:#7dc4f5">Ejemplo: <code>LLMPort</code>, <code>DocumentRepository</code></p>
+          </div>
+
+          <div class="card" style="border-left:3px solid #48AE64">
+            <h3 style="color:#48AE64">🔧 Adapters (Adaptadores)</h3>
+            <p>Implementaciones concretas que <strong>cumplen el contrato</strong> del puerto. Se pueden intercambiar
+            sin tocar el dominio.</p>
+            <p style="margin-top:6px;font-size:11px;color:#7dd697">Ejemplo: <code>OllamaProvider</code>, <code>ChromaDocumentRepo</code></p>
+          </div>
+
+          <table class="vs-table">
+            <thead><tr><th>Aspecto</th><th>Capas Tradicional</th><th>Hexagonal</th></tr></thead>
+            <tbody>
+              <tr><td>Acoplamiento</td><td class="vs-bad">Alto (top→down)</td><td class="vs-good">Bajo (→centro)</td></tr>
+              <tr><td>Testeabilidad</td><td class="vs-bad">Requiere DB/APIs</td><td class="vs-good">Mocks fáciles</td></tr>
+              <tr><td>Cambiar DB</td><td class="vs-bad">Refactor masivo</td><td class="vs-good">Nuevo adapter</td></tr>
+              <tr><td>Cambiar LLM</td><td class="vs-bad">Reescribir servicio</td><td class="vs-good">Swap en config</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide02.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide04.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

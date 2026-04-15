@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>06 — Decisiones Técnicas</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .decision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .dec-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: all 0.3s ease;
+    }
+    .dec-card:hover {
+      border-color: rgba(73,165,230,0.25);
+      background: rgba(73,165,230,0.02);
+    }
+    .dec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .dec-chose {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e0e8f0;
+    }
+    .dec-chose .icon { margin-right: 6px; }
+    .dec-badge {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(72,174,100,0.15);
+      color: #48AE64;
+      border: 1px solid rgba(72,174,100,0.2);
+    }
+    .dec-why {
+      font-size: 11px;
+      color: #8899aa;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .dec-comparison {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .alt-pill {
+      font-size: 9px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #667788;
+    }
+    .alt-pill.chosen {
+      background: rgba(73,165,230,0.1);
+      border-color: rgba(73,165,230,0.25);
+      color: #49A5E6;
+      font-weight: 600;
+    }
+    .benefit-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .ben-tag {
+      font-size: 9px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(72,174,100,0.08);
+      border: 1px solid rgba(72,174,100,0.15);
+      color: #7dd697;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">06 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Decisiones <span class="highlight">Técnicas</span></h1>
+    <p class="slide-subtitle animate delay-2">Por qué se eligió cada tecnología — Comparativas y beneficios</p>
+
+    <div class="slide-content">
+      <div class="decision-grid animate delay-3">
+        <!-- 1. FastAPI -->
+        <div class="dec-card" style="border-top:3px solid #49A5E6">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">⚡</span>FastAPI</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Framework async con validación automática vía Pydantic. Genera Swagger/OpenAPI sin código extra. Rendimiento comparable a Go/Node.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">FastAPI</span>
+            <span class="alt-pill">Flask</span>
+            <span class="alt-pill">Django</span>
+            <span class="alt-pill">Tornado</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Async nativo</span>
+            <span class="ben-tag">Pydantic v2</span>
+            <span class="ben-tag">Auto-docs</span>
+            <span class="ben-tag">Type hints</span>
+          </div>
+        </div>
+
+        <!-- 2. Ollama -->
+        <div class="dec-card" style="border-top:3px solid #9B59B6">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">🧠</span>Ollama (LLM primario)</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">LLM 100% local. Sin costos por token, privacidad total de datos BBVA. Swap a OpenAI/Groq con una variable gracias a Strategy Pattern.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">Ollama (local)</span>
+            <span class="alt-pill">OpenAI API</span>
+            <span class="alt-pill">Groq API</span>
+            <span class="alt-pill">HuggingFace</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Sin costo</span>
+            <span class="ben-tag">Privacidad</span>
+            <span class="ben-tag">Offline</span>
+            <span class="ben-tag">Swap fácil</span>
+          </div>
+        </div>
+
+        <!-- 3. ChromaDB -->
+        <div class="dec-card" style="border-top:3px solid #48AE64">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">📦</span>ChromaDB</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Vector store embebido, cero infraestructura. Persistencia en disco, API Python nativa. Ideal para prototipos y pruebas técnicas.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">ChromaDB</span>
+            <span class="alt-pill">Pinecone</span>
+            <span class="alt-pill">Weaviate</span>
+            <span class="alt-pill">FAISS</span>
+            <span class="alt-pill">Qdrant</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Embebido</span>
+            <span class="ben-tag">Gratis</span>
+            <span class="ben-tag">Persistencia</span>
+            <span class="ben-tag">Metadata filter</span>
+          </div>
+        </div>
+
+        <!-- 4. Selenium -->
+        <div class="dec-card" style="border-top:3px solid #F8CD51">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">🕷️</span>Selenium + BS4</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">BBVA.com.co usa JavaScript dinámico. Scrapy no renderiza JS. Selenium headless + BS4 para parsing garantiza contenido completo.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">Selenium</span>
+            <span class="alt-pill">Scrapy</span>
+            <span class="alt-pill">Playwright</span>
+            <span class="alt-pill">requests</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">JS rendering</span>
+            <span class="ben-tag">Headless</span>
+            <span class="ben-tag">Docker ready</span>
+            <span class="ben-tag">Dynamic content</span>
+          </div>
+        </div>
+
+        <!-- 5. SQLite -->
+        <div class="dec-card" style="border-top:3px solid #2DCCCD">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">🗄️</span>SQLite + WAL</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Zero-config, embebido, perfecto para prueba técnica. WAL mode permite lecturas concurrentes. Migrar a PostgreSQL = nuevo adapter.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">SQLite</span>
+            <span class="alt-pill">PostgreSQL</span>
+            <span class="alt-pill">MongoDB</span>
+            <span class="alt-pill">Redis</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Zero config</span>
+            <span class="ben-tag">WAL mode</span>
+            <span class="ben-tag">Portátil</span>
+            <span class="ben-tag">ACID</span>
+          </div>
+        </div>
+
+        <!-- 6. Hexagonal Architecture -->
+        <div class="dec-card" style="border-top:3px solid #F35E61">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">🏛️</span>Arquitectura Hexagonal</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Máximo desacoplamiento. El dominio no conoce la infra. Permite testear sin DB/LLM reales y cambiar cualquier componente sin refactoring.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">Hexagonal</span>
+            <span class="alt-pill">Layered (MVC)</span>
+            <span class="alt-pill">Clean Arch</span>
+            <span class="alt-pill">Monolítico</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">DIP nativo</span>
+            <span class="ben-tag">Testable</span>
+            <span class="ben-tag">Extensible</span>
+            <span class="ben-tag">SOLID</span>
+          </div>
+        </div>
+
+        <!-- 7. Sentence-Transformers -->
+        <div class="dec-card" style="border-top:3px solid #9B59B6">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">📐</span>Sentence-Transformers</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Embeddings multilingüe de alta calidad. Modelo local sin costos por API. Cross-Encoder para reranking fino (Top-K → Top 3).</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">Sentence-Transformers</span>
+            <span class="alt-pill">OpenAI Embeddings</span>
+            <span class="alt-pill">Cohere</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Local</span>
+            <span class="ben-tag">Multilingüe</span>
+            <span class="ben-tag">Reranking</span>
+            <span class="ben-tag">Sin costo</span>
+          </div>
+        </div>
+
+        <!-- 8. Docker -->
+        <div class="dec-card" style="border-top:3px solid #49A5E6">
+          <div class="dec-header">
+            <span class="dec-chose"><span class="icon">🐳</span>Docker Compose</span>
+            <span class="dec-badge">Elegido</span>
+          </div>
+          <p class="dec-why">Un solo <code>docker compose up</code> levanta todo. Multi-stage builds reducen imagen 60%. Healthchecks aseguran disponibilidad.</p>
+          <div class="dec-comparison">
+            <span class="alt-pill chosen">Docker Compose</span>
+            <span class="alt-pill">Manual install</span>
+            <span class="alt-pill">Kubernetes</span>
+            <span class="alt-pill">Podman</span>
+          </div>
+          <div class="benefit-row">
+            <span class="ben-tag">Reproducible</span>
+            <span class="ben-tag">Multi-stage</span>
+            <span class="ben-tag">Healthchecks</span>
+            <span class="ben-tag">1 comando</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide05.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide07.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

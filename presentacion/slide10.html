@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>10 — Flujo Completo del Sistema</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .pipeline-svg { width: 100%; min-height: 440px; }
+    .slide-content { padding: 0 20px; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">10 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Flujo Completo del <span class="highlight">Sistema</span></h1>
+    <p class="slide-subtitle animate delay-2">De la web de BBVA hasta la respuesta inteligente al usuario</p>
+
+    <div class="slide-content animate delay-3">
+      <div class="diagram-card" style="width:100%;max-width:100%;margin:0 auto;padding:12px 20px">
+        <svg class="pipeline-svg" viewBox="0 0 1060 400">
+          <defs>
+            <marker id="aR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#F35E61"/></marker>
+            <marker id="aC" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2DCCCD"/></marker>
+            <marker id="aB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#49A5E6"/></marker>
+            <marker id="aG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#48AE64"/></marker>
+            <marker id="aO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#F8CD51"/></marker>
+            <marker id="aP" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9B59B6"/></marker>
+          </defs>
+
+          <!-- PHASE 1: Ingestion (top row) -->
+          <text x="340" y="20" text-anchor="middle" fill="#F35E61" font-size="12" font-weight="700" font-family="Inter">FASE 1 — INGESTA DE CONOCIMIENTO</text>
+
+          <!-- Step 1: BBVA Website -->
+          <rect x="20" y="34" width="120" height="70" rx="10" fill="rgba(243,94,97,0.08)" stroke="#F35E61" stroke-width="2"/>
+          <text x="80" y="60" text-anchor="middle" fill="#F35E61" font-size="22">🌐</text>
+          <text x="80" y="80" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="700" font-family="Inter">BBVA Web</text>
+          <text x="80" y="94" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">bbva.com.co</text>
+
+          <line x1="140" y1="69" x2="168" y2="69" stroke="#F35E61" stroke-width="2" marker-end="url(#aR)"/>
+
+          <!-- Step 2: Scraping -->
+          <rect x="170" y="34" width="120" height="70" rx="10" fill="rgba(243,94,97,0.08)" stroke="#F35E61" stroke-width="2"/>
+          <text x="230" y="60" text-anchor="middle" fill="#F35E61" font-size="22">🕷️</text>
+          <text x="230" y="80" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="700" font-family="Inter">Selenium</text>
+          <text x="230" y="94" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Headless Chrome</text>
+
+          <line x1="290" y1="69" x2="318" y2="69" stroke="#F35E61" stroke-width="2" marker-end="url(#aR)"/>
+
+          <!-- Step 3: Cleaning -->
+          <rect x="320" y="34" width="120" height="70" rx="10" fill="rgba(45,204,205,0.08)" stroke="#2DCCCD" stroke-width="2"/>
+          <text x="380" y="60" text-anchor="middle" fill="#2DCCCD" font-size="22">🧹</text>
+          <text x="380" y="80" text-anchor="middle" fill="#5dd" font-size="10" font-weight="700" font-family="Inter">BS4 + Limpieza</text>
+          <text x="380" y="94" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">HTML → Texto limpio</text>
+
+          <line x1="440" y1="69" x2="468" y2="69" stroke="#2DCCCD" stroke-width="2" marker-end="url(#aC)"/>
+
+          <!-- Step 4: Chunking -->
+          <rect x="470" y="34" width="120" height="70" rx="10" fill="rgba(73,165,230,0.08)" stroke="#49A5E6" stroke-width="2"/>
+          <text x="530" y="60" text-anchor="middle" fill="#49A5E6" font-size="22">✂️</text>
+          <text x="530" y="80" text-anchor="middle" fill="#7dc4f5" font-size="10" font-weight="700" font-family="Inter">Chunking</text>
+          <text x="530" y="94" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Overlap · Template</text>
+
+          <line x1="590" y1="69" x2="618" y2="69" stroke="#49A5E6" stroke-width="2" marker-end="url(#aB)"/>
+
+          <!-- Step 5: Embedding -->
+          <rect x="620" y="34" width="130" height="70" rx="10" fill="rgba(155,89,182,0.08)" stroke="#9B59B6" stroke-width="2"/>
+          <text x="685" y="60" text-anchor="middle" fill="#9B59B6" font-size="22">📐</text>
+          <text x="685" y="80" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">Sentence-Transformers</text>
+          <text x="685" y="94" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Texto → Vectores 384d</text>
+
+          <line x1="685" y1="104" x2="685" y2="135" stroke="#9B59B6" stroke-width="2" marker-end="url(#aP)"/>
+
+          <!-- Step 6: ChromaDB Storage -->
+          <rect x="620" y="140" width="130" height="55" rx="10" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="2.5"/>
+          <text x="685" y="166" text-anchor="middle" fill="#48AE64" font-size="18">📦</text>
+          <text x="685" y="184" text-anchor="middle" fill="#7dd697" font-size="11" font-weight="700" font-family="Inter">ChromaDB</text>
+
+          <!-- Separator -->
+          <line x1="20" y1="220" x2="1040" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="8,4"/>
+
+          <!-- PHASE 2: Query Flow (bottom row) -->
+          <text x="530" y="246" text-anchor="middle" fill="#48AE64" font-size="12" font-weight="700" font-family="Inter">FASE 2 — CONSULTA RAG</text>
+
+          <!-- User Question -->
+          <rect x="20" y="260" width="110" height="70" rx="10" fill="rgba(73,165,230,0.08)" stroke="#49A5E6" stroke-width="2"/>
+          <text x="75" y="286" text-anchor="middle" fill="#49A5E6" font-size="22">👤</text>
+          <text x="75" y="306" text-anchor="middle" fill="#7dc4f5" font-size="10" font-weight="700" font-family="Inter">Pregunta</text>
+          <text x="75" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Streamlit / API</text>
+
+          <line x1="130" y1="295" x2="158" y2="295" stroke="#49A5E6" stroke-width="2" marker-end="url(#aB)"/>
+
+          <!-- Embedding Query -->
+          <rect x="160" y="260" width="110" height="70" rx="10" fill="rgba(155,89,182,0.08)" stroke="#9B59B6" stroke-width="2"/>
+          <text x="215" y="286" text-anchor="middle" fill="#9B59B6" font-size="22">📐</text>
+          <text x="215" y="306" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">Embedding</text>
+          <text x="215" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Query → Vector</text>
+
+          <line x1="270" y1="295" x2="298" y2="295" stroke="#9B59B6" stroke-width="2" marker-end="url(#aP)"/>
+
+          <!-- Retrieval -->
+          <rect x="300" y="260" width="110" height="70" rx="10" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="2"/>
+          <text x="355" y="286" text-anchor="middle" fill="#48AE64" font-size="22">🔍</text>
+          <text x="355" y="306" text-anchor="middle" fill="#7dd697" font-size="10" font-weight="700" font-family="Inter">Retrieval</text>
+          <text x="355" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Top-K = 10</text>
+
+          <!-- Arrow from ChromaDB to Retrieval -->
+          <line x1="620" y1="167" x2="420" y2="260" stroke="rgba(72,174,100,0.3)" stroke-width="1.5" stroke-dasharray="6,3"/>
+
+          <line x1="410" y1="295" x2="438" y2="295" stroke="#48AE64" stroke-width="2" marker-end="url(#aG)"/>
+
+          <!-- Reranking -->
+          <rect x="440" y="260" width="110" height="70" rx="10" fill="rgba(248,205,81,0.08)" stroke="#F8CD51" stroke-width="2"/>
+          <text x="495" y="286" text-anchor="middle" fill="#F8CD51" font-size="22">🔀</text>
+          <text x="495" y="306" text-anchor="middle" fill="#f5d97a" font-size="10" font-weight="700" font-family="Inter">Reranking</text>
+          <text x="495" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Cross-Encoder → Top 3</text>
+
+          <line x1="550" y1="295" x2="578" y2="295" stroke="#F8CD51" stroke-width="2" marker-end="url(#aO)"/>
+
+          <!-- Prompt Build -->
+          <rect x="580" y="260" width="130" height="70" rx="10" fill="rgba(45,204,205,0.08)" stroke="#2DCCCD" stroke-width="2"/>
+          <text x="645" y="286" text-anchor="middle" fill="#2DCCCD" font-size="22">📝</text>
+          <text x="645" y="306" text-anchor="middle" fill="#5dd" font-size="10" font-weight="700" font-family="Inter">Prompt Builder</text>
+          <text x="645" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Contexto+Historial+Q</text>
+
+          <line x1="710" y1="295" x2="738" y2="295" stroke="#2DCCCD" stroke-width="2" marker-end="url(#aC)"/>
+
+          <!-- LLM Generation -->
+          <rect x="740" y="260" width="120" height="70" rx="10" fill="rgba(155,89,182,0.08)" stroke="#9B59B6" stroke-width="2"/>
+          <text x="800" y="286" text-anchor="middle" fill="#9B59B6" font-size="22">🧠</text>
+          <text x="800" y="306" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">LLM (Strategy)</text>
+          <text x="800" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Ollama / OpenAI</text>
+
+          <line x1="860" y1="295" x2="888" y2="295" stroke="#9B59B6" stroke-width="2" marker-end="url(#aP)"/>
+
+          <!-- Response -->
+          <rect x="890" y="260" width="140" height="70" rx="10" fill="rgba(72,174,100,0.08)" stroke="#48AE64" stroke-width="2.5"/>
+          <text x="960" y="282" text-anchor="middle" fill="#48AE64" font-size="22">✅</text>
+          <text x="960" y="302" text-anchor="middle" fill="#7dd697" font-size="11" font-weight="700" font-family="Inter">Respuesta</text>
+          <text x="960" y="318" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">+ Fuentes citadas</text>
+
+          <!-- Save to SQLite -->
+          <line x1="960" y1="330" x2="960" y2="370" stroke="#48AE64" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <rect x="890" y="370" width="140" height="24" rx="6" fill="rgba(248,205,81,0.06)" stroke="rgba(248,205,81,0.2)" stroke-width="1"/>
+          <text x="960" y="387" text-anchor="middle" fill="#f5d97a" font-size="9" font-weight="600" font-family="Inter">🗄️ Guardar historial SQLite</text>
+
+          <!-- Phase labels on the side -->
+          <rect x="900" y="34" width="140" height="50" rx="8" fill="rgba(243,94,97,0.04)" stroke="rgba(243,94,97,0.15)" stroke-width="1"/>
+          <text x="970" y="55" text-anchor="middle" fill="#f5898b" font-size="9" font-weight="600" font-family="Inter">⏱️ Ingesta</text>
+          <text x="970" y="72" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Una vez o programada</text>
+
+          <rect x="20" y="355" width="140" height="36" rx="8" fill="rgba(72,174,100,0.04)" stroke="rgba(72,174,100,0.15)" stroke-width="1"/>
+          <text x="90" y="378" text-anchor="middle" fill="#7dd697" font-size="9" font-weight="600" font-family="Inter">⚡ Consulta: ~2-5 seg</text>
+        </svg>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide09.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide11.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

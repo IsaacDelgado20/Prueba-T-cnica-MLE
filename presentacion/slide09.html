@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>09 — Repository Pattern</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">09 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Patrón <span class="highlight">Repository</span></h1>
+    <p class="slide-subtitle animate delay-2">Abstracción del almacenamiento — Dominio desacoplado de la persistencia</p>
+
+    <div class="slide-content">
+      <div class="two-col animate delay-3">
+        <!-- Left: SVG Diagram -->
+        <div class="diagram-card">
+          <svg viewBox="0 0 520 420" width="100%" height="100%">
+            <defs>
+              <marker id="arrB4" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#49A5E6"/></marker>
+              <marker id="arrG4" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#48AE64"/></marker>
+              <marker id="arrP4" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#9B59B6"/></marker>
+            </defs>
+
+            <!-- Application layer -->
+            <text x="260" y="20" text-anchor="middle" fill="#8899aa" font-size="10" font-weight="600" font-family="Inter">CAPA DE APLICACIÓN</text>
+
+            <!-- Two services -->
+            <rect x="30" y="30" width="210" height="50" rx="10" fill="rgba(73,165,230,0.06)" stroke="#49A5E6" stroke-width="2"/>
+            <text x="135" y="52" text-anchor="middle" fill="#49A5E6" font-size="11" font-weight="700" font-family="Inter">⚡ RAGService</text>
+            <text x="135" y="69" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">Orquesta preguntas & respuestas</text>
+
+            <rect x="280" y="30" width="210" height="50" rx="10" fill="rgba(73,165,230,0.06)" stroke="#49A5E6" stroke-width="2"/>
+            <text x="385" y="52" text-anchor="middle" fill="#49A5E6" font-size="11" font-weight="700" font-family="Inter">📊 AnalyticsService</text>
+            <text x="385" y="69" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">Métricas y estadísticas</text>
+
+            <!-- Arrows down to ports -->
+            <line x1="135" y1="80" x2="135" y2="116" stroke="#49A5E6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="385" y1="80" x2="385" y2="116" stroke="#49A5E6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <text x="260" y="104" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">depende de ▽</text>
+
+            <!-- DOMAIN LAYER: Ports -->
+            <rect x="10" y="115" width="500" height="95" rx="12" fill="rgba(155,89,182,0.03)" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="8,4"/>
+            <text x="260" y="134" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">DOMINIO — Ports (Interfaces Abstractas)</text>
+
+            <!-- ConversationRepository Port -->
+            <rect x="30" y="144" width="220" height="56" rx="8" fill="rgba(155,89,182,0.08)" stroke="#9B59B6" stroke-width="1.5"/>
+            <text x="140" y="162" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">ConversationRepository</text>
+            <text x="140" y="178" text-anchor="middle" fill="#a682b5" font-size="8.5" font-family="JetBrains Mono">save() · get_history() · search()</text>
+            <text x="140" y="192" text-anchor="middle" fill="#a682b5" font-size="8.5" font-family="JetBrains Mono">get_analytics() · count()</text>
+
+            <!-- DocumentRepository Port -->
+            <rect x="270" y="144" width="220" height="56" rx="8" fill="rgba(155,89,182,0.08)" stroke="#9B59B6" stroke-width="1.5"/>
+            <text x="380" y="162" text-anchor="middle" fill="#c39bd3" font-size="10" font-weight="700" font-family="Inter">DocumentRepository</text>
+            <text x="380" y="178" text-anchor="middle" fill="#a682b5" font-size="8.5" font-family="JetBrains Mono">add_documents() · search()</text>
+            <text x="380" y="192" text-anchor="middle" fill="#a682b5" font-size="8.5" font-family="JetBrains Mono">count() · delete_collection()</text>
+
+            <!-- Arrows to implementations -->
+            <line x1="140" y1="210" x2="140" y2="262" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="380" y1="210" x2="380" y2="262" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <text x="260" y="245" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">implementa ▽</text>
+
+            <!-- INFRASTRUCTURE LAYER -->
+            <rect x="10" y="260" width="500" height="100" rx="12" fill="rgba(248,205,81,0.03)" stroke="rgba(248,205,81,0.3)" stroke-width="1.5"/>
+            <text x="260" y="278" text-anchor="middle" fill="#f5d97a" font-size="10" font-weight="700" font-family="Inter">INFRAESTRUCTURA — Adapters (Implementaciones Concretas)</text>
+
+            <!-- SQLite Adapter -->
+            <rect x="30" y="288" width="220" height="60" rx="8" fill="rgba(72,174,100,0.06)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="140" y="308" text-anchor="middle" fill="#7dd697" font-size="10" font-weight="700" font-family="Inter">🗄️ SQLiteConversationRepo</text>
+            <text x="140" y="324" text-anchor="middle" fill="#8899aa" font-size="8.5" font-family="Inter">WAL mode · context manager</text>
+            <text x="140" y="338" text-anchor="middle" fill="#8899aa" font-size="8.5" font-family="Inter">Parameterized queries · Thread safe</text>
+
+            <!-- ChromaDB Adapter -->
+            <rect x="270" y="288" width="220" height="60" rx="8" fill="rgba(72,174,100,0.06)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="380" y="308" text-anchor="middle" fill="#7dd697" font-size="10" font-weight="700" font-family="Inter">📦 ChromaDocumentRepo</text>
+            <text x="380" y="324" text-anchor="middle" fill="#8899aa" font-size="8.5" font-family="Inter">Embedding + similarity search</text>
+            <text x="380" y="338" text-anchor="middle" fill="#8899aa" font-size="8.5" font-family="Inter">Batch operations · Metadata filter</text>
+
+            <!-- Bottom: DIP rule -->
+            <rect x="80" y="378" width="360" height="32" rx="8" fill="rgba(45,204,205,0.06)" stroke="rgba(45,204,205,0.3)" stroke-width="1"/>
+            <text x="260" y="399" text-anchor="middle" fill="#2DCCCD" font-size="10" font-weight="600" font-family="Inter">
+              🔄 DIP: Infraestructura implementa → Dominio no conoce la implementación
+            </text>
+          </svg>
+        </div>
+
+        <!-- Right: Explanation -->
+        <div class="col">
+          <div class="card" style="border-left:3px solid #9B59B6">
+            <h3 style="color:#9B59B6">📋 Ports (Dominio)</h3>
+            <p>Interfaces abstractas que definen <strong>QUÉ</strong> operaciones de persistencia necesita el sistema.</p>
+            <div style="margin-top:8px">
+              <span class="tag tag-purple">ConversationRepository</span>
+              <span class="tag tag-purple">DocumentRepository</span>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:3px solid #48AE64">
+            <h3 style="color:#48AE64">🔌 Adapters (Infra)</h3>
+            <p>Implementaciones concretas que definen <strong>CÓMO</strong> se persisten los datos.</p>
+            <div style="margin-top:8px">
+              <span class="tag tag-green">SQLiteConversationRepo</span>
+              <span class="tag tag-green">ChromaDocumentRepo</span>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:3px solid #49A5E6">
+            <h3 style="color:#49A5E6">🔒 SQLite con mejores prácticas</h3>
+            <ul class="bullet-list">
+              <li>WAL mode (concurrencia)</li>
+              <li>Context managers (<code>with</code>)</li>
+              <li>Parameterized queries (anti SQL-injection)</li>
+              <li><code>row_factory</code> para datos tipados</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:3px solid #2DCCCD">
+            <h3 style="color:#2DCCCD">💡 Beneficio clave</h3>
+            <p>Migrar de SQLite a <strong>PostgreSQL</strong> solo requiere nueva clase que implemente el port. <strong>Cero cambios</strong> en dominio/app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide08.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide10.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

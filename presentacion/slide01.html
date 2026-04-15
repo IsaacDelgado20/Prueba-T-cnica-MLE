@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>BBVA RAG Assistant — Presentación</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @keyframes hexRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes hexPulse { 0%,100% { opacity:0.06; transform: scale(1); } 50% { opacity:0.12; transform: scale(1.03); } }
+    @keyframes particleFloat {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(-720px) translateX(40px); opacity: 0; }
+    }
+    @keyframes orbOrbit { 0% { transform: rotate(0deg) translateX(280px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(280px) rotate(-360deg); } }
+    @keyframes titleGlow {
+      0%,100% { text-shadow: 0 0 60px rgba(73,165,230,0.1); }
+      50% { text-shadow: 0 0 100px rgba(73,165,230,0.25), 0 0 200px rgba(73,165,230,0.08); }
+    }
+    @keyframes lineExpand { from { width: 0; } to { width: 120px; } }
+    @keyframes tagFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    .hero-particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--bbva-cyan);
+      border-radius: 50%;
+      animation: particleFloat linear infinite;
+      box-shadow: 0 0 6px rgba(73,165,230,0.4);
+    }
+    .orb {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: 0 0 15px 3px;
+    }
+    .hero-line {
+      display: inline-block;
+      height: 1px;
+      background: linear-gradient(90deg, var(--bbva-cyan), transparent);
+      animation: lineExpand 1.2s ease forwards;
+      animation-delay: 0.8s;
+      width: 0;
+      vertical-align: middle;
+      margin: 0 16px;
+    }
+    .hero-tags .tag {
+      animation: tagFloat 3s ease-in-out infinite;
+    }
+    .hero-tags .tag:nth-child(2) { animation-delay: 0.3s; }
+    .hero-tags .tag:nth-child(3) { animation-delay: 0.6s; }
+    .hero-tags .tag:nth-child(4) { animation-delay: 0.9s; }
+    .hero-tags .tag:nth-child(5) { animation-delay: 1.2s; }
+    .hero-tags .tag:nth-child(6) { animation-delay: 1.5s; }
+    .bbva-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(73,165,230,0.12), rgba(45,204,205,0.08));
+      border: 1px solid rgba(73,165,230,0.25);
+      box-shadow: 0 0 30px rgba(73,165,230,0.1), inset 0 0 20px rgba(73,165,230,0.05);
+      margin-bottom: 36px;
+      backdrop-filter: blur(10px);
+    }
+    .bbva-badge span {
+      color: #49A5E6;
+      font-family: Inter, sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 3px;
+    }
+    .bbva-badge .bbva-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #49A5E6;
+      box-shadow: 0 0 10px rgba(73,165,230,0.6);
+      animation: brandPulse 2s ease-in-out infinite;
+    }
+    .hero-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+    .hero-meta-row .separator {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(73,165,230,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="slide title-slide">
+    <!-- Animated background SVG -->
+    <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:0" viewBox="0 0 1280 720">
+      <defs>
+        <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#49A5E6" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="g2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#2DCCCD" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="g3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#9B59B6" stop-opacity="0.06"/>
+          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Ambient orbs -->
+      <circle cx="950" cy="180" r="350" fill="url(#g1)" opacity="0.6">
+        <animate attributeName="r" values="350;380;350" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="580" r="280" fill="url(#g2)" opacity="0.5">
+        <animate attributeName="r" values="280;310;280" dur="10s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1100" cy="550" r="200" fill="url(#g3)" opacity="0.4">
+        <animate attributeName="r" values="200;230;200" dur="7s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Animated hexagon wireframes -->
+      <g style="transform-origin:640px 360px" opacity="0.08">
+        <animateTransform attributeName="transform" type="rotate" values="0 640 360;360 640 360" dur="120s" repeatCount="indefinite"/>
+        <polygon points="640,80 860,207 860,461 640,588 420,461 420,207" fill="none" stroke="#49A5E6" stroke-width="1"/>
+      </g>
+      <g style="transform-origin:640px 360px" opacity="0.06">
+        <animateTransform attributeName="transform" type="rotate" values="360 640 360;0 640 360" dur="90s" repeatCount="indefinite"/>
+        <polygon points="640,140 810,247 810,421 640,528 470,421 470,247" fill="none" stroke="#2DCCCD" stroke-width="0.8"/>
+      </g>
+      <g style="transform-origin:640px 360px" opacity="0.04">
+        <animateTransform attributeName="transform" type="rotate" values="0 640 360;360 640 360" dur="150s" repeatCount="indefinite"/>
+        <polygon points="640,200 760,287 760,381 640,468 520,381 520,287" fill="none" stroke="#9B59B6" stroke-width="0.6"/>
+      </g>
+
+      <!-- Grid nodes that subtly glow -->
+      <circle cx="200" cy="150" r="1.5" fill="#49A5E6" opacity="0.3"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite"/></circle>
+      <circle cx="400" cy="100" r="1" fill="#2DCCCD" opacity="0.2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="5s" repeatCount="indefinite"/></circle>
+      <circle cx="1050" cy="120" r="1.5" fill="#49A5E6" opacity="0.25"><animate attributeName="opacity" values="0.25;0.7;0.25" dur="3.5s" repeatCount="indefinite"/></circle>
+      <circle cx="1150" cy="350" r="1" fill="#9B59B6" opacity="0.2"><animate attributeName="opacity" values="0.2;0.5;0.2" dur="6s" repeatCount="indefinite"/></circle>
+      <circle cx="100" cy="400" r="1" fill="#2DCCCD" opacity="0.2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="4.5s" repeatCount="indefinite"/></circle>
+      <circle cx="800" cy="650" r="1.5" fill="#49A5E6" opacity="0.2"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="5.5s" repeatCount="indefinite"/></circle>
+
+      <!-- Connection lines between nodes -->
+      <line x1="200" y1="150" x2="400" y2="100" stroke="rgba(73,165,230,0.06)" stroke-width="0.5"/>
+      <line x1="1050" y1="120" x2="1150" y2="350" stroke="rgba(155,89,182,0.05)" stroke-width="0.5"/>
+      <line x1="100" y1="400" x2="200" y2="150" stroke="rgba(45,204,205,0.05)" stroke-width="0.5"/>
+    </svg>
+
+    <!-- Floating particles -->
+    <div class="hero-particle" style="left:10%;bottom:0;animation-duration:12s;animation-delay:0s;width:2px;height:2px"></div>
+    <div class="hero-particle" style="left:25%;bottom:0;animation-duration:15s;animation-delay:2s;width:3px;height:3px;background:#2DCCCD"></div>
+    <div class="hero-particle" style="left:45%;bottom:0;animation-duration:18s;animation-delay:4s"></div>
+    <div class="hero-particle" style="left:65%;bottom:0;animation-duration:14s;animation-delay:1s;width:1.5px;height:1.5px;background:#9B59B6"></div>
+    <div class="hero-particle" style="left:80%;bottom:0;animation-duration:16s;animation-delay:3s"></div>
+    <div class="hero-particle" style="left:92%;bottom:0;animation-duration:20s;animation-delay:5s;width:3px;height:3px;background:#2DCCCD"></div>
+    <div class="hero-particle" style="left:55%;bottom:0;animation-duration:13s;animation-delay:6s"></div>
+    <div class="hero-particle" style="left:35%;bottom:0;animation-duration:17s;animation-delay:8s;background:#9B59B6"></div>
+
+    <!-- Corner accents -->
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+
+    <div style="z-index:2;position:relative">
+      <!-- BBVA Badge -->
+      <div class="bbva-badge animate delay-1">
+        <div class="bbva-dot"></div>
+        <span>BBVA</span>
+      </div>
+
+      <h1 class="slide-title animate delay-2" style="animation: fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards, titleGlow 4s ease-in-out 1s infinite; animation-delay: 0.25s; opacity:0;">
+        Asistente <span class="highlight">RAG</span><br>
+        BBVA Colombia
+      </h1>
+
+      <p class="slide-subtitle animate delay-3" style="max-width:700px;margin:0 auto 30px">
+        <span class="hero-line"></span>
+        Sistema de Retrieval-Augmented Generation con Arquitectura Hexagonal
+        <span class="hero-line"></span>
+      </p>
+
+      <div class="meta hero-tags animate delay-4">
+        <span class="tag tag-blue">Python 3.11</span>
+        <span class="tag tag-green">FastAPI</span>
+        <span class="tag tag-purple">ChromaDB</span>
+        <span class="tag tag-orange">Ollama</span>
+        <span class="tag tag-cyan">Selenium</span>
+        <span class="tag tag-red">Docker</span>
+      </div>
+
+      <div class="hero-meta-row animate delay-5" style="margin-top:24px">
+        <span>📅 Abril 2026</span>
+        <div class="separator"></div>
+        <span>🏛️ Prueba Técnica</span>
+        <div class="separator"></div>
+        <span>14 Diapositivas</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" style="position:absolute;bottom:30px;left:60px;right:60px;border-top:none;border-image:none">
+      <span style="color:var(--text-secondary);font-size:13px">Diapositiva 1 / 14</span>
+      <div class="page-dots">
+        <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide02.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

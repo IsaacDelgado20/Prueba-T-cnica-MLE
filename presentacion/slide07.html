@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>07 — Factory + Singleton Pattern</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">07 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">Patrones: <span class="highlight">Factory + Singleton</span></h1>
+    <p class="slide-subtitle animate delay-2">Creación centralizada y Thread-Safe de servicios</p>
+
+    <div class="slide-content">
+      <div class="two-col-wide-left animate delay-3">
+        <!-- Left: SVG Diagram -->
+        <div class="diagram-card">
+          <svg viewBox="0 0 540 420" width="100%" height="100%">
+            <defs>
+              <marker id="arrB2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#49A5E6"/></marker>
+              <marker id="arrG2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#48AE64"/></marker>
+              <marker id="arrO2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#F8CD51"/></marker>
+            </defs>
+
+            <!-- Title -->
+            <text x="270" y="24" text-anchor="middle" fill="#49A5E6" font-size="13" font-weight="700" font-family="Inter">ServiceContainer (Singleton)</text>
+
+            <!-- Main container box -->
+            <rect x="30" y="34" width="480" height="170" rx="14" fill="rgba(73,165,230,0.04)" stroke="#49A5E6" stroke-width="2"/>
+
+            <!-- Lock icon -->
+            <text x="50" y="62" fill="#F8CD51" font-size="14">🔒</text>
+            <text x="70" y="62" fill="#f5d97a" font-size="10" font-weight="600" font-family="Inter">threading.Lock()</text>
+            <text x="220" y="62" fill="#8899aa" font-size="9" font-family="Inter">Double-checked locking</text>
+
+            <!-- _instance: None / cls -->
+            <rect x="50" y="72" width="200" height="30" rx="6" fill="rgba(155,89,182,0.1)" stroke="rgba(155,89,182,0.3)" stroke-width="1"/>
+            <text x="150" y="92" text-anchor="middle" fill="#c39bd3" font-size="10" font-family="JetBrains Mono">_instance: Optional[Self] = None</text>
+
+            <rect x="280" y="72" width="210" height="30" rx="6" fill="rgba(155,89,182,0.1)" stroke="rgba(155,89,182,0.3)" stroke-width="1"/>
+            <text x="385" y="92" text-anchor="middle" fill="#c39bd3" font-size="10" font-family="JetBrains Mono">_initialized: bool = False</text>
+
+            <!-- Services inside container -->
+            <text x="50" y="125" fill="#e0e8f0" font-size="10" font-weight="600" font-family="Inter">Servicios registrados:</text>
+
+            <rect x="50" y="134" width="130" height="28" rx="6" fill="rgba(72,174,100,0.1)" stroke="rgba(72,174,100,0.3)" stroke-width="1"/>
+            <text x="115" y="153" text-anchor="middle" fill="#7dd697" font-size="9.5" font-weight="600" font-family="Inter">⚡ rag_service</text>
+
+            <rect x="195" y="134" width="130" height="28" rx="6" fill="rgba(72,174,100,0.1)" stroke="rgba(72,174,100,0.3)" stroke-width="1"/>
+            <text x="260" y="153" text-anchor="middle" fill="#7dd697" font-size="9.5" font-weight="600" font-family="Inter">🕷️ scraping_service</text>
+
+            <rect x="340" y="134" width="150" height="28" rx="6" fill="rgba(72,174,100,0.1)" stroke="rgba(72,174,100,0.3)" stroke-width="1"/>
+            <text x="415" y="153" text-anchor="middle" fill="#7dd697" font-size="9.5" font-weight="600" font-family="Inter">📊 analytics_service</text>
+
+            <!-- get_instance() method -->
+            <rect x="50" y="172" width="440" height="24" rx="5" fill="rgba(73,165,230,0.08)" stroke="rgba(73,165,230,0.2)" stroke-width="1"/>
+            <text x="270" y="188" text-anchor="middle" fill="#7dc4f5" font-size="10" font-family="JetBrains Mono">get_instance() → if _instance is None → lock → create → return _instance</text>
+
+            <!-- Arrow down to Factory -->
+            <line x1="270" y1="204" x2="270" y2="240" stroke="#49A5E6" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrB2)"/>
+            <text x="310" y="225" fill="#8899aa" font-size="9" font-family="Inter">usa ▼</text>
+
+            <!-- Factory Box -->
+            <text x="270" y="262" text-anchor="middle" fill="#48AE64" font-size="13" font-weight="700" font-family="Inter">Factory Methods</text>
+            <rect x="30" y="270" width="480" height="110" rx="14" fill="rgba(72,174,100,0.04)" stroke="#48AE64" stroke-width="2"/>
+
+            <!-- Three factory methods -->
+            <rect x="50" y="286" width="140" height="44" rx="8" fill="rgba(243,94,97,0.08)" stroke="#F35E61" stroke-width="1.5"/>
+            <text x="120" y="305" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="600" font-family="Inter">_create_llm()</text>
+            <text x="120" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">→ OllamaProvider</text>
+
+            <rect x="200" y="286" width="140" height="44" rx="8" fill="rgba(73,165,230,0.08)" stroke="#49A5E6" stroke-width="1.5"/>
+            <text x="270" y="305" text-anchor="middle" fill="#7dc4f5" font-size="10" font-weight="600" font-family="Inter">_create_vector()</text>
+            <text x="270" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">→ ChromaAdapter</text>
+
+            <rect x="350" y="286" width="140" height="44" rx="8" fill="rgba(248,205,81,0.08)" stroke="#F8CD51" stroke-width="1.5"/>
+            <text x="420" y="305" text-anchor="middle" fill="#f5d97a" font-size="10" font-weight="600" font-family="Inter">_create_scraper()</text>
+            <text x="420" y="320" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">→ SeleniumAdapter</text>
+
+            <!-- Bottom: Config driven -->
+            <rect x="80" y="345" width="380" height="26" rx="6" fill="rgba(248,205,81,0.06)" stroke="rgba(248,205,81,0.2)" stroke-width="1"/>
+            <text x="270" y="363" text-anchor="middle" fill="#f5d97a" font-size="10" font-family="Inter">
+              📋 Configuración → Settings(SecretStr) → decide qué adaptador instanciar
+            </text>
+
+            <!-- Benefits -->
+            <text x="270" y="405" text-anchor="middle" fill="#8899aa" font-size="10" font-family="Inter">
+              ✅ Una sola instancia · ✅ Thread-safe · ✅ Lazy init · ✅ Config-driven
+            </text>
+          </svg>
+        </div>
+
+        <!-- Right: Description -->
+        <div class="col">
+          <div class="card" style="border-left:3px solid #9B59B6">
+            <h3 style="color:#9B59B6">🔒 Singleton</h3>
+            <p>El <code>ServiceContainer</code> garantiza una <strong>única instancia</strong> en toda la app.</p>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>Double-checked locking</li>
+              <li><code>threading.Lock()</code></li>
+              <li>Lazy initialization</li>
+              <li>Flag <code>_initialized</code></li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:3px solid #48AE64">
+            <h3 style="color:#48AE64">🏭 Factory Method</h3>
+            <p>Métodos privados <code>_create_*</code> instancian adaptadores según configuración.</p>
+            <ul class="bullet-list" style="margin-top:8px">
+              <li>Decisión por <code>Settings</code></li>
+              <li>Retorna interfaz abstracta</li>
+              <li>Fácil swap de implementación</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-left:3px solid #F8CD51">
+            <h3 style="color:#F8CD51">⚙️ Beneficio</h3>
+            <p>Cambiar de <strong>Ollama</strong> a <strong>OpenAI</strong> solo requiere cambiar una variable de entorno. Cero cambios en código.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide06.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide08.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

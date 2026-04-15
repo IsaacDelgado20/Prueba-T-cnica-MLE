@@ -1,0 +1,33 @@
+# =============================================================================
+# BBVA RAG Assistant - Dependencias
+# =============================================================================
+
+# --- Web Framework ---
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+
+# --- UI ---
+streamlit==1.38.0
+
+# --- Web Scraping ---
+selenium==4.25.0
+beautifulsoup4==4.12.3
+
+# --- Vector Store ---
+chromadb==0.5.5
+
+# --- Embeddings & Reranker ---
+sentence-transformers==3.1.0
+
+# --- LLM ---
+openai==1.50.0
+httpx<0.28
+
+# --- Configuración ---
+pydantic==2.9.0
+pydantic-settings==2.5.0
+python-dotenv==1.0.1
+
+# --- HTTP & Datos ---
+requests==2.32.0
+pandas==2.2.0

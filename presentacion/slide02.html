@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <title>02 — ¿Qué es RAG?</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="slide">
+    <div class="slide-corner-tl"></div>
+    <div class="slide-corner-br"></div>
+    <div class="slide-header">
+      <span class="slide-number">02 / 14</span>
+      <div class="brand"><div class="brand-dot"></div> BBVA RAG Assistant</div>
+    </div>
+
+    <h1 class="slide-title animate delay-1">¿Qué es <span class="highlight">RAG</span>?</h1>
+    <p class="slide-subtitle animate delay-2">Retrieval-Augmented Generation — El patrón clave del sistema</p>
+
+    <div class="slide-content">
+      <div class="two-col animate delay-3">
+        <!-- Left: Diagram -->
+        <div class="diagram-card">
+          <svg viewBox="0 0 500 400" width="100%" height="100%">
+            <!-- User -->
+            <circle cx="80" cy="60" r="28" fill="rgba(73,165,230,0.15)" stroke="#49A5E6" stroke-width="2"/>
+            <text x="80" y="56" text-anchor="middle" fill="#49A5E6" font-size="22">👤</text>
+            <text x="80" y="82" text-anchor="middle" fill="#8899aa" font-size="10" font-family="Inter">Usuario</text>
+
+            <!-- Arrow down -->
+            <line x1="80" y1="95" x2="80" y2="130" stroke="#49A5E6" stroke-width="2" marker-end="url(#arrowBlue)"/>
+            <defs><marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#49A5E6"/></marker></defs>
+
+            <!-- Step 1: Query -->
+            <rect x="20" y="130" width="120" height="50" rx="10" fill="rgba(73,165,230,0.12)" stroke="#49A5E6" stroke-width="1.5"/>
+            <text x="80" y="150" text-anchor="middle" fill="#7dc4f5" font-size="10" font-weight="600" font-family="Inter">1. PREGUNTA</text>
+            <text x="80" y="168" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">"¿Qué tarjetas ofrece?"</text>
+
+            <!-- Arrow right -->
+            <line x1="140" y1="155" x2="190" y2="155" stroke="#2DCCCD" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowCyan)"/>
+            <defs><marker id="arrowCyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#2DCCCD"/></marker></defs>
+
+            <!-- Step 2: Embedding -->
+            <rect x="190" y="115" width="120" height="80" rx="12" fill="rgba(45,204,205,0.1)" stroke="#2DCCCD" stroke-width="1.5"/>
+            <text x="250" y="140" text-anchor="middle" fill="#2DCCCD" font-size="18">🔢</text>
+            <text x="250" y="158" text-anchor="middle" fill="#6ee3e3" font-size="10" font-weight="600" font-family="Inter">2. EMBEDDING</text>
+            <text x="250" y="175" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">Vectorización</text>
+            <text x="250" y="187" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">[0.23, -0.41, 0.89...]</text>
+
+            <!-- Arrow right -->
+            <line x1="310" y1="155" x2="360" y2="155" stroke="#48AE64" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowGreen)"/>
+            <defs><marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#48AE64"/></marker></defs>
+
+            <!-- Step 3: Retrieval -->
+            <rect x="360" y="105" width="120" height="100" rx="12" fill="rgba(72,174,100,0.1)" stroke="#48AE64" stroke-width="1.5"/>
+            <text x="420" y="130" text-anchor="middle" fill="#48AE64" font-size="18">🔍</text>
+            <text x="420" y="148" text-anchor="middle" fill="#7dd697" font-size="10" font-weight="600" font-family="Inter">3. RETRIEVAL</text>
+            <text x="420" y="164" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">ChromaDB busca</text>
+            <text x="420" y="178" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">chunks similares</text>
+            <text x="420" y="195" text-anchor="middle" fill="#7dd697" font-size="8" font-family="Inter">Top-K = 10</text>
+
+            <!-- Arrow down -->
+            <line x1="420" y1="210" x2="420" y2="245" stroke="#F8CD51" stroke-width="2" marker-end="url(#arrowYellow)"/>
+            <defs><marker id="arrowYellow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#F8CD51"/></marker></defs>
+
+            <!-- Step 4: Reranking -->
+            <rect x="350" y="245" width="140" height="55" rx="12" fill="rgba(248,205,81,0.1)" stroke="#F8CD51" stroke-width="1.5"/>
+            <text x="420" y="267" text-anchor="middle" fill="#F8CD51" font-size="14">⚖️</text>
+            <text x="420" y="283" text-anchor="middle" fill="#f5d97a" font-size="10" font-weight="600" font-family="Inter">4. RERANKING</text>
+            <text x="420" y="295" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">Cross-Encoder → Top 3</text>
+
+            <!-- Arrow left -->
+            <line x1="350" y1="272" x2="310" y2="272" stroke="#9B59B6" stroke-width="2" marker-end="url(#arrowPurple)"/>
+            <defs><marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#9B59B6"/></marker></defs>
+
+            <!-- Step 5: LLM -->
+            <rect x="160" y="240" width="150" height="65" rx="12" fill="rgba(155,89,182,0.1)" stroke="#9B59B6" stroke-width="1.5"/>
+            <text x="235" y="263" text-anchor="middle" fill="#9B59B6" font-size="18">🧠</text>
+            <text x="235" y="280" text-anchor="middle" fill="#c49ed8" font-size="10" font-weight="600" font-family="Inter">5. GENERACIÓN</text>
+            <text x="235" y="296" text-anchor="middle" fill="#8899aa" font-size="9" font-family="Inter">LLM + Contexto + Historial</text>
+
+            <!-- Arrow left -->
+            <line x1="160" y1="272" x2="120" y2="272" stroke="#F35E61" stroke-width="2" marker-end="url(#arrowRed)"/>
+            <defs><marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#F35E61"/></marker></defs>
+
+            <!-- Step 6: Response -->
+            <rect x="20" y="245" width="100" height="55" rx="12" fill="rgba(243,94,97,0.1)" stroke="#F35E61" stroke-width="1.5"/>
+            <text x="70" y="267" text-anchor="middle" fill="#F35E61" font-size="16">💬</text>
+            <text x="70" y="283" text-anchor="middle" fill="#f5898b" font-size="10" font-weight="600" font-family="Inter">6. RESPUESTA</text>
+            <text x="70" y="295" text-anchor="middle" fill="#8899aa" font-size="8" font-family="Inter">+ fuentes citadas</text>
+
+            <!-- Knowledge Base -->
+            <rect x="160" y="335" width="280" height="50" rx="12" fill="rgba(73,165,230,0.06)" stroke="rgba(73,165,230,0.2)" stroke-width="1" stroke-dasharray="5,3"/>
+            <text x="300" y="355" text-anchor="middle" fill="#49A5E6" font-size="12">📚</text>
+            <text x="300" y="373" text-anchor="middle" fill="#8899aa" font-size="10" font-family="Inter">Base de Conocimiento BBVA (ChromaDB + Embeddings)</text>
+
+            <!-- Connection -->
+            <line x1="420" y1="205" x2="380" y2="335" stroke="rgba(73,165,230,0.2)" stroke-width="1" stroke-dasharray="3,3"/>
+          </svg>
+        </div>
+
+        <!-- Right: Explanation cards -->
+        <div class="col">
+          <div class="card">
+            <span class="card-icon">💡</span>
+            <h3>¿Por qué RAG?</h3>
+            <p>Los LLM tienen conocimiento limitado y pueden inventar información. RAG agrega <strong>contexto real</strong> recuperado de fuentes verificadas antes de generar la respuesta.</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">🎯</span>
+            <h3>Ventajas en este proyecto</h3>
+            <ul>
+              <li>Respuestas basadas en datos reales de BBVA</li>
+              <li>Fuentes citadas y verificables</li>
+              <li>Sin alucinaciones sobre productos</li>
+              <li>Actualizable con nuevo scraping</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="card-icon">⚡</span>
+            <h3>Pipeline completo</h3>
+            <p>Embedding → Búsqueda vectorial → Reranking → Generación con contexto → Persistencia de conversación</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="slide01.html">← Anterior</a>
+      <div class="page-dots">
+        <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <a href="slide03.html">Siguiente →</a>
+    </nav>
+  </div>
+</body>
+</html>

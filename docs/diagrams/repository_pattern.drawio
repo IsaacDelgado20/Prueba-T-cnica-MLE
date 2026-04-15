@@ -1,0 +1,127 @@
+<mxfile host="app.diagrams.net" modified="2026-04-14T00:00:00.000Z" agent="draw.io" version="21.0.0" type="device">
+  <diagram id="repository-pattern" name="Repository Pattern">
+    <mxGraphModel dx="1422" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Repository Pattern - Persistencia de Datos&lt;/b&gt;&lt;br&gt;&lt;i&gt;Abstrae el mecanismo de almacenamiento, desacoplando el dominio de la infraestructura&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="234" y="15" width="700" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ========= CONVERSATION REPOSITORY (LEFT) ========= -->
+        <mxCell id="conv_header" value="&lt;b&gt;Repositorio de Conversaciones&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="100" y="75" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ConversationRepository Interface -->
+        <mxCell id="conv_repo_iface" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ConversationRepository&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ save(conversation: Conversation): None&lt;br&gt;+ get(conversation_id: str): Optional[Conversation]&lt;br&gt;+ list_all(): List[Conversation]&lt;br&gt;+ delete(conversation_id: str): None&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="115" width="400" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="conv_file1" value="📁 src/domain/ports.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="50" y="95" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- SQLiteConversationRepository -->
+        <mxCell id="sqlite_repo" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SQLiteConversationRepository&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _db_path: str&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ save(conversation): None&lt;br&gt;+ get(conversation_id): Optional[Conversation]&lt;br&gt;+ list_all(): List[Conversation]&lt;br&gt;+ delete(conversation_id): None&lt;br&gt;- _init_db(): None&lt;br&gt;- _connect(): Connection&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="340" width="360" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="conv_file2" value="📁 src/infrastructure/conversation_repo.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="70" y="525" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- SQLite icon -->
+        <mxCell id="sqlite_icon" value="🗄️ SQLite" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="575" width="120" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow implements -->
+        <mxCell id="arrow_conv" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="sqlite_repo" target="conv_repo_iface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_conv_label" value="&lt;i&gt;implements&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow_conv">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow to DB -->
+        <mxCell id="arrow_db" style="endArrow=open;endSize=12;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sqlite_repo" target="sqlite_icon">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_db_label" value="persiste en" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow_db">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ========= DOCUMENT REPOSITORY (RIGHT) ========= -->
+        <mxCell id="doc_header" value="&lt;b&gt;Repositorio de Documentos&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="680" y="75" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- DocumentRepository Interface -->
+        <mxCell id="doc_repo_iface" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;DocumentRepository&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ save_raw(document: Document): None&lt;br&gt;+ save_clean(document: Document): None&lt;br&gt;+ list_documents(): List[Dict]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="115" width="350" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_file1" value="📁 src/domain/ports.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="600" y="95" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- FileDocumentRepository -->
+        <mxCell id="file_repo" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FileDocumentRepository&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- _raw_dir: str&lt;br&gt;- _clean_dir: str&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ save_raw(document): None&lt;br&gt;+ save_clean(document): None&lt;br&gt;+ list_documents(): List[Dict]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="625" y="340" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_file2" value="📁 src/infrastructure/document_repo.py" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="625" y="505" width="280" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Filesystem icons -->
+        <mxCell id="raw_dir" value="📁 data/raw/&lt;br&gt;(.html + .json)" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;tabWidth=80;tabHeight=20;" vertex="1" parent="1">
+          <mxGeometry x="580" y="575" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="clean_dir" value="📁 data/clean/&lt;br&gt;(.txt + .json)" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;tabWidth=80;tabHeight=20;" vertex="1" parent="1">
+          <mxGeometry x="760" y="575" width="140" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow implements doc -->
+        <mxCell id="arrow_doc" style="endArrow=block;endSize=16;endFill=0;dashed=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="file_repo" target="doc_repo_iface">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_doc_label" value="&lt;i&gt;implements&lt;/i&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow_doc">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow to filesystem -->
+        <mxCell id="arrow_fs1" style="endArrow=open;endSize=12;html=1;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="file_repo" target="raw_dir">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow_fs2" style="endArrow=open;endSize=12;html=1;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="file_repo" target="clean_dir">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Entities -->
+        <mxCell id="conv_entity" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Conversation&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ id: str&lt;br&gt;+ messages: List[Message]&lt;br&gt;+ created_at: datetime&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="685" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="doc_entity" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Document&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ id: str&lt;br&gt;+ url: str&lt;br&gt;+ raw_content: str&lt;br&gt;+ clean_content: str&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=11;fontFamily=Helvetica;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="685" width="200" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="entity_label" value="📁 src/domain/entities.py" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="160" y="660" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Note -->
+        <mxCell id="note1" value="&lt;b&gt;Repository Pattern:&lt;/b&gt;&lt;br&gt;El dominio define los contratos&lt;br&gt;(interfaces). La infraestructura&lt;br&gt;implementa el almacenamiento&lt;br&gt;concreto. Se puede cambiar&lt;br&gt;SQLite → PostgreSQL sin&lt;br&gt;afectar el dominio." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="490" y="685" width="230" height="120" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
